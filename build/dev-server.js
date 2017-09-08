@@ -75,6 +75,37 @@ apiRouters.get('/getVideo', function(req, res) {
     console.log(e)
   })
 })
+
+apiRouters.get('/getHotWord', function(req, res) {
+  var url = 'https://www.toutiao.com/hot_words/'
+  axios.get(url, {
+    headers: {
+      referer: 'https://www.toutiao.com/ch/news_entertainment/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRouters.get('/getSearch', function(req, res) {
+  var url = 'https://www.toutiao.com/search/sug/'
+  axios.get(url, {
+    headers: {
+      referer: 'https://www.toutiao.com/ch/news_hot/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
 app.use('/api', apiRouters)
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {

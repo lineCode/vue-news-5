@@ -26,6 +26,17 @@
           </li>
         </ul>
       </div>
+      <div class="content_right">
+        <div class="search_hot">
+          <input type="text" @input="_searchWord" @blur="bluript" @focus="focusipt" v-model="keyword">
+          <span>搜索</span>
+        </div>
+        <div class="hot_list" v-show="horWordState">
+          <ul>
+            <li v-for="(list, index) of hotWord"><span>{{index+1}}</span>{{list}}</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +44,7 @@
 <script>
   import axios from 'axios'
   import fromtDate from '@/common/js/formtDate'
+  const ERR_OK = 200
   export default {
     data () {
       return {
@@ -68,11 +80,16 @@
           id: 'funny'
         }],
         ind: 0,
-        newsContent: []
+        newsContent: [],
+        hotWord: [],
+        keyword: '',
+        history: [],
+        horWordState: false
       }
     },
     created () {
       this._getNews()
+      this._getHotWord()
     },
     methods: {
       _getNews (argment, id) {
@@ -92,6 +109,34 @@
           this.newsContent = res.data.data
           for (let list of this.newsContent) {
             list.behot_time = fromtDate(list.behot_time)
+          }
+        })
+      },
+      bluript () {
+        this.horWordState = false
+      },
+      focusipt () {
+        this.horWordState = true
+      },
+      _getHotWord () {
+        axios.get('/api/getHotWord').then(res => {
+          if (res.status === ERR_OK) {
+            this.hotWord = res.data
+            this.history = res.data
+          }
+        })
+      },
+      _searchWord () {
+        axios.get('/api/getSearch', {
+          params: {
+            keyword: this.keyword
+          }
+        }).then(res => {
+          if (res.status === ERR_OK) {
+            this.hotWord = res.data.data
+            if (this.hotWord.length === 0) {
+              this.hotWord = this.history
+            }
           }
         })
       },
@@ -212,6 +257,82 @@
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+      .content_right{
+        width: 340px;
+        min-height: 600px;
+        margin-left:30PX;
+        position: relative;
+        .search_hot{
+          border-color: rgb(232, 232, 232);
+          position: relative;
+          border: 1px solid #e8e8e8;
+          padding: 0 14px;
+          background-color: #f5f6f7;
+          border-radius: 4px;
+          input{
+            border: 0;
+            color: #444;
+            font-size: 14px;
+            line-height: 20px;
+            width: 280px;
+            padding: 0;
+            outline: 0;
+            padding: 9px 10px 9px 0;
+            background: #f5f6f7;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+          }
+        }
+        .hot_list{
+          position: absolute;
+          left: 0;
+          right: 0;
+          background: #fff;
+          font-size: 14px;
+          z-index: 22;
+          border: 1px solid #e8e8e8;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,.12);
+          ul{
+            li{
+              height: 40px;
+              line-height: 40px;
+              padding-right: 16px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: #444;
+              padding-left:15px;
+              span{
+                display:inline-block;
+                width:15px;
+                margin-right:10px;
+                text-align:right;
+                color:#999;
+                font-style: italic;
+              }
+            }
+            li:hover{
+              background:#f4f5f6;
+            }
+            li:nth-child(1) {
+              span{
+                color:#f85959;
+              }
+            }
+            li:nth-child(2) {
+              span{
+                color:#ff7800;
+              }
+            }
+            li:nth-child(3) {
+              span{
+                color:#ffba00;
               }
             }
           }

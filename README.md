@@ -1,6 +1,6 @@
 # vuetest
 
-> A Vue.js project
+> 基于vue2.0+vue-router+axios仿今日头条Pc端
 
 ## Build Setup
 

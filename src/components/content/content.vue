@@ -135,13 +135,40 @@
       this._getHotVideo()
     },
     methods: {
+      _getMinBeHout (nextTime) {
+        let arg = {
+          max_behot_time: nextTime,
+          category: '__all__',
+          utm_source: 'toutiao',
+          widen: 2,
+          tadrequire: true,
+          as: 'A1C5F97BD651399',
+          cp: '59B6A1636929CE1'
+        }
+        axios.get('/api/getMaxBehot', {
+          params: arg
+        }).then(res => {
+          if (res.status === ERR_OK) {
+            let tempArr = res.data.data
+            for (let list of tempArr) {
+              this.newsContent.push(list)
+            }
+            for (let list of this.newsContent) {
+              list.behot_time = fromtDate(list.behot_time)
+            }
+            console.log(res)
+          }
+        })
+      },
       _getNews (argment, id) {
         let arg = {
           min_behot_time: 0,
           category: '__all__',
           utm_source: 'toutiao',
           widen: 1,
-          tadrequire: true
+          tadrequire: true,
+          as: 'A145D95FR67138E',
+          cp: '59B6A1SDFEAE9E1'
         }
         if (argment) {
           arg = argment
@@ -150,9 +177,8 @@
           params: arg
         }).then(res => {
           this.newsContent = res.data.data
-          for (let list of this.newsContent) {
-            list.behot_time = fromtDate(list.behot_time)
-          }
+          let nextTime = res.data.next.max_behot_time
+          this._getMinBeHout(nextTime)
         })
       },
       bluript () {

@@ -61,6 +61,7 @@ export default {
 .top_bar{
   display:flex;
   position: fixed;
+  z-index:1000;
   justify-content: space-between;
   background: #444444;
   color:#fff;

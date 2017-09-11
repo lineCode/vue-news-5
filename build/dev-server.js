@@ -106,6 +106,66 @@ apiRouters.get('/getSearch', function(req, res) {
   })
 })
 
+apiRouters.get('/getRealtimeNews', function(req, res) {
+  var url = 'http://www.toutiao.com/api/pc/realtime_news/'
+  axios.get(url, {
+    headers: {
+      referer: 'http://www.toutiao.com/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRouters.get('/getHotVideo', function(req, res) {
+  var url = 'http://www.toutiao.com/api/pc/hot_video/'
+  axios.get(url, {
+    headers: {
+      referer: 'http://www.toutiao.com/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRouters.get('/getHotPhoto', function(req, res) {
+  var url = 'http://www.toutiao.com/api/pc/hot_gallery/'
+  axios.get(url, {
+    headers: {
+      referer: 'http://www.toutiao.com/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRouters.get('/getMaxBehot', function(req, res) {
+  var url = 'http://www.toutiao.com/api/pc/feed/'
+  axios.get(url, {
+    headers: {
+      referer: 'http://www.toutiao.com/',
+      host: 'www.toutiao.com'
+    },
+    params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
 app.use('/api', apiRouters)
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {

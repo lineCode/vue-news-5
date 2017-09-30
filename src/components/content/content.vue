@@ -10,22 +10,24 @@
             @click="chooseLi(index, list.id)">{{list.value}}</li>
         </ul>
       </div>
-      <div class="content_list">
-        <ul>
-          <li v-for="(list ,index) of newsContent">
-            <div class="inner_list">
-              <img :src="list.image_url" alt="">
-              <div class="inner_inner">
-                <p class="news_title">{{list.title}}</p>
-                <p class="news_content">
-                  <span class="media_avatar"><img :src="list.media_avatar_url" alt=""></span>
-                  <span>{{list.source}}.{{list.comments_count}}评论.{{list.behot_time}}</span>
-                </p>
+      <transition name="fade">
+        <div class="content_list">
+          <ul>
+            <li v-for="(list ,index) of newsContent">
+              <div class="inner_list">
+                <img :src="list.image_url" alt="">
+                <div class="inner_inner">
+                  <p class="news_title">{{list.title}}</p>
+                  <p class="news_content">
+                    <span class="media_avatar"><img :src="list.media_avatar_url" alt=""></span>
+                    <span>{{list.source}}.{{list.comments_count}}评论.{{list.behot_time}}</span>
+                  </p>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+            </li>
+          </ul>
+        </div>
+      </transition>
       <div class="content_right">
       <!--热门搜索-->
         <div class="search_hot">

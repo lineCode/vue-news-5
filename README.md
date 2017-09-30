@@ -6,6 +6,8 @@
 # 重点
 >怎么使用node服务代理去请求数据
 
+<img src="static/demo.png">
+
 ## Build Setup
 
 ``` bash

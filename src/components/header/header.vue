@@ -9,7 +9,9 @@
         <span>{{current_time}}</span>
       </div>
       <div class="top_bar_right">
-        <span>登陆</span>
+        <router-link :to="{path:'/book'}">
+          <span class="book">登陆</span>
+        </router-link>
         <span>反馈</span>
         <span>侵权投诉</span>
         <span>头条产品</span>
@@ -58,6 +60,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.book{
+  color:#fff;  
+}
 .top_bar{
   display:flex;
   position: fixed;
